@@ -122,5 +122,6 @@ window.onload = () => {
       //   cardBody.append(h5, h6, a);
       divCard.append(img, cardBody);
       container.appendChild(divCard);
-    });
+    })
+    .catch((err) => console.log(err));
 };

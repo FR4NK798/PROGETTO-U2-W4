@@ -107,4 +107,5 @@ fetch(url, {
       col.appendChild(divCard);
       divShow.appendChild(col);
     });
-  });
+  })
+  .catch((err) => console.log(err));
