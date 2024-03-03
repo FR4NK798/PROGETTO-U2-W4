@@ -1,6 +1,6 @@
 // dove mostrare prodotti
-const divShow = document.querySelector(".album .row");
-console.log("row", divShow);
+const row = document.querySelector(".container .row");
+console.log("row", row);
 
 // url da dove cercare
 const url = "https://striveschool-api.herokuapp.com/api/product/";
@@ -54,8 +54,7 @@ fetch(url, {
     // secondo then
     console.log("collezione: ", collezione[0]);
     // dove mostrare
-    const col = document.createElement("div");
-    col.classList.add("col-md-4");
+
     if (collezione[0]) {
       console.log("Elemento singolo: ", collezione[0]);
 
@@ -64,6 +63,8 @@ fetch(url, {
         // formazione singoli elementi card
 
         //   dove aggiungere ogni volta la carta <div class="col-md-4">
+        const col = document.createElement("div");
+        col.classList.add("col-md-4");
 
         const divCard = document.createElement("div");
         divCard.classList.add("card", "mb-4");
@@ -106,7 +107,7 @@ fetch(url, {
         cardBody.append(h5, h6, a);
         divCard.append(img, cardBody);
         col.appendChild(divCard);
-        divShow.appendChild(col);
+        row.appendChild(col);
       });
     } else {
       console.log("collezione, nessun elemento", collezione);
@@ -116,7 +117,7 @@ fetch(url, {
       nessunElemento.innerText = "Nessun prodotto disponibile";
 
       col.appendChild(nessunElemento);
-      divShow.appendChild(col);
+      row.appendChild(col);
     }
   })
   .catch((err) => console.log(err));
