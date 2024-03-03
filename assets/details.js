@@ -3,6 +3,8 @@ console.log("URL search params: ", params);
 console.log("window: ", window);
 console.log("window.location", window.location);
 
+const loading = document.querySelector(".container-fluid .spinner-border");
+
 const elementId = params.get("productId");
 console.log("elementId", elementId);
 
@@ -17,6 +19,8 @@ window.onload = () => {
     },
   })
     .then((response) => {
+      // FUNZIONA QUI PRIMO THEN
+      loading.classList.add("d-none");
       console.log("Response: ", response);
       //   dove bisogna aspettare EXTRA
       if (response.ok) {
