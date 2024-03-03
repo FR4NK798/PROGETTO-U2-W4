@@ -71,11 +71,15 @@ fetch(url, {
         divCard.style = "width: 18rem";
         //   console.log("divCard", divCard);
         //   img src="..." class="card-img-top" alt="...">
+
         const img = document.createElement("img");
+
         img.classList.add("card-img-top", "object-fit-contain");
+
         img.src = element.imageUrl;
         img.alt = element.name;
         img.style = "height: 25em;";
+
         //   console.log("elemento img: ", img);
         // <div class="card-body">
         const cardBody = document.createElement("div");
@@ -104,8 +108,14 @@ fetch(url, {
         //   a ogni row col
 
         //   cardBody.append(h5, h6, p, a);
+
         cardBody.append(h5, h6, a);
         divCard.append(img, cardBody);
+        col.appendChild(divCard);
+        row.appendChild(col);
+
+        cardBody.append(h5, h6, a);
+
         col.appendChild(divCard);
         row.appendChild(col);
       });

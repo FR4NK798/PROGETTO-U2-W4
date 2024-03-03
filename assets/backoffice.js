@@ -18,6 +18,9 @@ const titleAlt = document.getElementById("title-alt");
 const btnSave = document.querySelector(".d-flex button");
 console.log("btnSave", btnSave);
 
+const btnResetForm = document.querySelector(".d-flex button+button");
+console.log("btn reset", btnResetForm);
+
 const btnDelete = document.querySelector(".d-none");
 console.log("btnDelete", btnDelete);
 
@@ -32,6 +35,8 @@ if (elementId) {
 
   btnDelete.classList.remove("d-none");
   btnDelete.innerText = "Elimina";
+
+  btnResetForm.classList.add("d-none");
 
   fetch(url, {
     headers: {
@@ -86,6 +91,9 @@ if (elementId) {
     .catch((err) => console.log(err));
 } else {
   // modalità crea
+  btnResetForm.classList.remove("d-none");
+  btnResetForm.classList.add("btn-warning", "btn");
+
   console.log("modalità crea");
   titleAlt.innerText = "— Crea";
 
@@ -240,5 +248,15 @@ const deleteProduct = () => {
     setTimeout(() => {
       window.location.assign("./index.html");
     }, 1500);
+  }
+};
+
+const provaForm = document.querySelector("form");
+
+const resetForm = (e) => {
+  const confermReset = confirm("Sei sicuro di resettare i dati inseriti?");
+  if (confermReset) {
+    console.log(e.target.form);
+    e.target.form.reset();
   }
 };
