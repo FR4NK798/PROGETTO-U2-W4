@@ -1,6 +1,8 @@
 // dove mostrare prodotti
 const row = document.querySelector(".container .row");
 console.log("row", row);
+const loading = document.querySelector(".container-fluid .spinner-border");
+console.log("loading", loading);
 
 // url da dove cercare
 const url = "https://striveschool-api.herokuapp.com/api/product/";
@@ -15,6 +17,10 @@ fetch(url, {
 })
   .then((response) => {
     console.log("Response: ", response);
+    console.log("fase1");
+    // FUNZIONA QUI PRIMO THEN
+    loading.classList.add("d-none");
+
     //   dove bisogna aspettare EXTRA
     if (response.ok) {
       return response.json();
@@ -51,6 +57,8 @@ fetch(url, {
   })
 
   .then((collezione) => {
+    console.log("fase2");
+    // loading.classList.add("d-none");
     // secondo then
     console.log("collezione: ", collezione[0]);
     // dove mostrare
@@ -100,7 +108,7 @@ fetch(url, {
         //   <a href="#" class="btn btn-primary">Go somewhere</a>
         const a = document.createElement("a");
         a.classList.add("btn", "btn-primary");
-        a.innerText = "Visualizza Dettagli";
+        a.innerText = "Scopri di più";
         a.href = `./details.html?productId=${element._id}`;
         console.log("element._id", element._id);
         //   https://striveschool-api.herokuapp.com/api/product/
@@ -118,6 +126,8 @@ fetch(url, {
 
         col.appendChild(divCard);
         row.appendChild(col);
+        console.log("fase3");
+        span.classList.add("d-none");
       });
     } else {
       console.log("collezione, nessun elemento", collezione);
@@ -128,6 +138,9 @@ fetch(url, {
 
       col.appendChild(nessunElemento);
       row.appendChild(col);
+      console.log("fase4");
+      span.classList.add("d-none");
     }
   })
   .catch((err) => console.log(err));
+// loading.classList.add("d-none");
