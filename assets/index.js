@@ -52,60 +52,71 @@ fetch(url, {
 
   .then((collezione) => {
     // secondo then
-    console.log("collezione: ", collezione);
+    console.log("collezione: ", collezione[0]);
     // dove mostrare
-    console.log("Elemento singolo: ", collezione[0]);
+    const col = document.createElement("div");
+    col.classList.add("col-md-4");
+    if (collezione[0]) {
+      console.log("Elemento singolo: ", collezione[0]);
 
-    collezione.forEach((element) => {
-      console.log("element", element);
-      // formazione singoli elementi card
+      collezione.forEach((element) => {
+        console.log("element", element);
+        // formazione singoli elementi card
 
-      //   dove aggiungere ogni volta la carta <div class="col-md-4">
-      const col = document.createElement("div");
-      col.classList.add("col-md-4");
+        //   dove aggiungere ogni volta la carta <div class="col-md-4">
 
-      const divCard = document.createElement("div");
-      divCard.classList.add("card", "mb-4");
-      divCard.style = "width: 18rem";
-      //   console.log("divCard", divCard);
-      //   img src="..." class="card-img-top" alt="...">
-      const img = document.createElement("img");
-      img.classList.add("card-img-top", "object-fit-contain");
-      img.src = element.imageUrl;
-      img.alt = element.name;
-      img.style = "height: 25em;";
-      //   console.log("elemento img: ", img);
-      // <div class="card-body">
-      const cardBody = document.createElement("div");
-      cardBody.classList.add("card-body");
-      //  <h5 class="card-title">Card title</h5>
-      const h5 = document.createElement("h5");
-      h5.classList.add("card-title");
-      h5.innerText = element.name;
-      //   console.log("h5", h5);
-      // <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-      const h6 = document.createElement("h6");
-      h6.classList.add("card-subtitle", "mb-2", "text-body-secondary");
-      h6.innerText = element.brand;
-      //  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      //   const p = document.createElement("p");
-      //   p.classList.add("card-text");
-      //   p.innerText = element.description;
-      //   <a href="#" class="btn btn-primary">Go somewhere</a>
-      const a = document.createElement("a");
-      a.classList.add("btn", "btn-primary");
-      a.innerText = "Visualizza Dettagli";
-      a.href = `./details.html?productId=${element._id}`;
-      console.log("element._id", element._id);
-      //   https://striveschool-api.herokuapp.com/api/product/
-      console.log("ancor a: ", a);
-      //   a ogni row col
+        const divCard = document.createElement("div");
+        divCard.classList.add("card", "mb-4");
+        divCard.style = "width: 18rem";
+        //   console.log("divCard", divCard);
+        //   img src="..." class="card-img-top" alt="...">
+        const img = document.createElement("img");
+        img.classList.add("card-img-top", "object-fit-contain");
+        img.src = element.imageUrl;
+        img.alt = element.name;
+        img.style = "height: 25em;";
+        //   console.log("elemento img: ", img);
+        // <div class="card-body">
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
+        //  <h5 class="card-title">Card title</h5>
+        const h5 = document.createElement("h5");
+        h5.classList.add("card-title");
+        h5.innerText = element.name;
+        //   console.log("h5", h5);
+        // <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+        const h6 = document.createElement("h6");
+        h6.classList.add("card-subtitle", "mb-2", "text-body-secondary");
+        h6.innerText = element.brand;
+        //  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        //   const p = document.createElement("p");
+        //   p.classList.add("card-text");
+        //   p.innerText = element.description;
+        //   <a href="#" class="btn btn-primary">Go somewhere</a>
+        const a = document.createElement("a");
+        a.classList.add("btn", "btn-primary");
+        a.innerText = "Visualizza Dettagli";
+        a.href = `./details.html?productId=${element._id}`;
+        console.log("element._id", element._id);
+        //   https://striveschool-api.herokuapp.com/api/product/
+        console.log("ancor a: ", a);
+        //   a ogni row col
 
-      //   cardBody.append(h5, h6, p, a);
-      cardBody.append(h5, h6, a);
-      divCard.append(img, cardBody);
-      col.appendChild(divCard);
+        //   cardBody.append(h5, h6, p, a);
+        cardBody.append(h5, h6, a);
+        divCard.append(img, cardBody);
+        col.appendChild(divCard);
+        divShow.appendChild(col);
+      });
+    } else {
+      console.log("collezione, nessun elemento", collezione);
+      // <h6 class="bg-light ps-2 py-3">Server Details</h6>
+      const nessunElemento = document.createElement("h2");
+      nessunElemento.classList.add("bg-light", "ps-2", "py-3");
+      nessunElemento.innerText = "Nessun prodotto disponibile";
+
+      col.appendChild(nessunElemento);
       divShow.appendChild(col);
-    });
+    }
   })
   .catch((err) => console.log(err));

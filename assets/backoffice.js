@@ -10,19 +10,8 @@ const token =
 const elementId = params.get("productId");
 console.log("elementId", elementId);
 
-const url = "https://striveschool-api.herokuapp.com/api/product/" + elementId;
+let url = "https://striveschool-api.herokuapp.com/api/product/" + elementId;
 
-// if (elementId) {
-//   const method = "PUT";
-
-//   console.log("url: ", url);
-// } else {
-//   const method = "POST";
-//   const url = "https://striveschool-api.herokuapp.com/api/product/";
-//   console.log("url: ", url);
-// }
-
-// window.onload = () => {
 // rivela modalità
 const titleAlt = document.getElementById("title-alt");
 
@@ -35,6 +24,7 @@ console.log("btnDelete", btnDelete);
 if (elementId) {
   // modalità modifica
   console.log("modalità modifica");
+  console.log("url di modifica con id: ", url);
   titleAlt.innerText = "— Modifica";
 
   btnSave.innerText = "Modifica Prodotto";
@@ -105,8 +95,13 @@ if (elementId) {
 // };
 
 const riceviDatiForm = (e) => {
+  console.log("tasto invio - prova modifica");
   e.preventDefault();
   console.log("modalità crea - dati raccolti form");
+
+  const elementId = params.get("productId");
+  // id
+  console.log("elementId", elementId);
 
   // https://images.unsplash.com/photo-1707336670211-abb7a586f736?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
   // https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Samsung_Galaxy_S.svg/800px-Samsung_Galaxy_S.svg.png
@@ -143,8 +138,22 @@ const riceviDatiForm = (e) => {
     console.log("url modificata per post: ", urlPost);
     console.log("token", token);
 
-    fetch(urlPost, {
-      method: "POST",
+    const params = new URLSearchParams(window.location.search); // oggetto costruito a partire dai parametri nella URL es. ?agendaId=2938123
+    console.log("URL search params: ", params);
+    console.log("window: ", window);
+    console.log("window.location", window.location);
+    let methodMod = "PUT";
+
+    if (elementId) {
+      url = url;
+      methodMod = methodMod;
+    } else {
+      url = urlPost;
+      methodMod = "POST";
+    }
+
+    fetch(url, {
+      method: methodMod,
       body: JSON.stringify(newProduct),
       headers: {
         Authorization: token,
@@ -189,7 +198,12 @@ const riceviDatiForm = (e) => {
       })
       .then((newObject) => {
         console.log("newObject", newObject);
-        alert("Oggetto creato, ritornerai alla home");
+        console.log("elementId", elementId);
+        if (elementId) {
+          alert("Oggetto modificato con successo, ritornerai alla home");
+        } else {
+          alert("Oggetto creato, ritornerai alla home");
+        }
 
         e.target.reset();
         setTimeout(() => {
@@ -201,5 +215,30 @@ const riceviDatiForm = (e) => {
       .catch((err) => console.log(err));
   } else {
     alert("l'immagine inserita non è valida");
+  }
+};
+
+const deleteProduct = () => {
+  console.log("btn delete");
+  // console.log("da eliminare: ", response);
+  const conferma = confirm("Sei sicuro di eliminare il prodotto?");
+  console.log("url", url);
+
+  if (conferma) {
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((daEliminare) => daEliminare.json())
+      .then((eliminato) => {
+        console.log("eliminato", eliminato);
+        alert(`Prodotto ${eliminato.name}, verrai riportato alla Homepage`);
+      });
+
+    setTimeout(() => {
+      window.location.assign("./index.html");
+    }, 1500);
   }
 };
