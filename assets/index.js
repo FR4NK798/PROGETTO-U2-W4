@@ -4,6 +4,9 @@ console.log("row", row);
 const loading = document.querySelector(".container-fluid .spinner-border");
 console.log("loading", loading);
 
+const loadingCard = document.querySelectorAll(".loading");
+console.log("loadingCard", loadingCard);
+
 // url da dove cercare
 const url = "https://striveschool-api.herokuapp.com/api/product/";
 // chiave
@@ -20,8 +23,19 @@ fetch(url, {
     console.log("fase1");
     // FUNZIONA QUI PRIMO THEN
     loading.classList.add("d-none");
+    for (let i = 0; i < loadingCard.length; i++) {
+      loadingCard[i].classList.add("d-none");
+    }
 
     //   dove bisogna aspettare EXTRA
+    //   <h5 class="card-title placeholder-glow">
+    //      <span class="placeholder col-6"></span>
+    //    </h5>
+    //    <p class="card-text placeholder-glow">
+    //      <span class="placeholder col-8"></span>
+    //    </p>
+    //    <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+    //
     if (response.ok) {
       return response.json();
     } else {
@@ -60,10 +74,10 @@ fetch(url, {
     console.log("fase2");
     // loading.classList.add("d-none");
     // secondo then
-    console.log("collezione: ", collezione[0]);
+    console.log("collezione: ", collezione);
     // dove mostrare
 
-    if (collezione[0]) {
+    if (collezione) {
       console.log("Elemento singolo: ", collezione[0]);
 
       collezione.forEach((element) => {
@@ -75,7 +89,7 @@ fetch(url, {
         col.classList.add("col-md-4");
 
         const divCard = document.createElement("div");
-        divCard.classList.add("card", "mb-4");
+        divCard.classList.add("card", "mb-4", "mt-4");
         divCard.style = "width: 18rem";
         //   console.log("divCard", divCard);
         //   img src="..." class="card-img-top" alt="...">
@@ -126,8 +140,6 @@ fetch(url, {
 
         col.appendChild(divCard);
         row.appendChild(col);
-        console.log("fase3");
-        span.classList.add("d-none");
       });
     } else {
       console.log("collezione, nessun elemento", collezione);
